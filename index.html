@@ -1,0 +1,67 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<script src="js/jquery.min.js"></script>
+<style>
+    canvas{
+        border: 1px solid #333;
+    }
+</style>
+
+</head>
+<body>
+
+<canvas id="canvas" width="700" height="700"></canvas>
+
+<script>
+    const canvas=document.getElementById("canvas");
+    const ctx=canvas.getContext("2d");
+class ArcAni{
+    data(){
+        return{
+            // x:Math.random()*700,
+            // y:Math.random()*700,
+            radius:Math.random()*20,
+            start:0,
+            end:(Math.PI/180)*360,
+            r:Math.random()*255,
+            g:Math.random()*255,
+            b:Math.random()*255
+        }
+    }
+    addArc(x,y){
+        ctx.save();
+        let data=this.data();
+        ctx.translate(75,75);
+        ctx.beginPath();
+        ctx.fillStyle="rgb("+data.r+","+data.g+","+data.b+")";
+        ctx.arc(x,y,data.radius,data.start,data.end,false);
+        ctx.fill();
+        ctx.restore();
+    }
+}
+let n=new ArcAni();
+// setInterval(function () {
+//     n.addArc();
+// },500)
+//     n.addArc(120,120)
+  let timer;
+    canvas.onmousemove=function (event) {
+        let numX=Math.random()*100;
+        let numY=Math.random()*100;
+        let x=numX>50?-(event.clientX):(event.clientX);
+        let y=numY>50?-(event.clientY):(event.clientY);
+        timer=setTimeout(function () {
+            n.addArc(x,y)
+        },200)
+    }
+    canvas.onmouseout=function () {
+        clearTimeout(timer);
+        console.log("end")
+    }
+</script>
+
+</body>
+</html>
